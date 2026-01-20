@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Hero() {
+  const roles = [
+    "Computer Science Engineer",
+    "Software Developer",
+    "Open Source Enthusiast",
+  ];
+
+  const [currentRole, setCurrentRole] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRole((prev) => (prev + 1) % roles.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
       
-      {/* Background Gradient */}
+      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-pink-600/20" />
 
       {/* Content */}
@@ -21,11 +39,19 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="text-xl md:text-2xl text-gray-300 mb-8">
-          Computer Science Engineer | Software Developer
-        </p>
+        {/* Animated Role */}
+        <motion.p
+          key={currentRole}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-xl md:text-2xl text-gray-300 mb-6"
+        >
+          {roles[currentRole]}
+        </motion.p>
 
-        <div className="flex justify-center gap-4">
+        {/* Buttons */}
+        <div className="flex justify-center gap-4 mb-8">
           <a
             href="#projects"
             className="px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition"
@@ -38,6 +64,32 @@ export default function Hero() {
             className="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition"
           >
             Contact Me
+          </a>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex justify-center gap-6">
+          <a
+            href="https://github.com/AmulyaKaushik"
+            target="_blank"
+            className="hover:text-blue-400 transition"
+          >
+            <Github size={24} />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/amulya-kaushik/"
+            target="_blank"
+            className="hover:text-blue-400 transition"
+          >
+            <Linkedin size={24} />
+          </a>
+
+          <a
+            href="mailto:amulyakaushik7@gmail.com"
+            className="hover:text-blue-400 transition"
+          >
+            <Mail size={24} />
           </a>
         </div>
       </motion.div>
