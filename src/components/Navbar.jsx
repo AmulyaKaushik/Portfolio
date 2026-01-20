@@ -5,7 +5,7 @@ export default function Navbar() {
         
         {/* Logo / Name */}
         <span className="text-xl font-bold text-blue-400">
-          YourName
+          Amulya Kaushik
         </span>
 
         {/* Links */}
