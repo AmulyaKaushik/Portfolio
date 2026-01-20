@@ -1,6 +1,33 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
+function StatCard({ label, value, suffix = "" }) {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+  });
+
+  return (
+    <div
+      ref={ref}
+      className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 text-center"
+    >
+      <motion.h3
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.6 }}
+        className="text-3xl font-extrabold text-blue-400"
+      >
+        {inView ? value : 0}
+        {suffix}
+      </motion.h3>
+
+      <p className="mt-2 text-sm text-gray-300">
+        {label}
+      </p>
+    </div>
+  );
+}
+
 export default function About() {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -53,6 +80,14 @@ export default function About() {
           </p>
         </div>
       </motion.div>
+            {/* Stats */}
+      <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <StatCard label="Years of Coding" value={3} suffix="+" />
+        <StatCard label="Projects Completed" value={12} suffix="+" />
+        <StatCard label="Technologies Used" value={15} suffix="+" />
+        <StatCard label="GitHub Contributions" value={400} suffix="+" />
+      </div>
+
     </section>
   );
 }
