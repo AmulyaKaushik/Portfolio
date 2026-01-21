@@ -12,7 +12,7 @@ export default function Education() {
       <div className="grid gap-8">
         
         {/* B.Tech */}
-        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="glow-red-hover bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
           <h3 className="text-xl font-bold">
             B.Tech in Computer Science Engineering
           </h3>
@@ -37,7 +37,7 @@ export default function Education() {
         </div>
 
         {/* 12th */}
-        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="glow-red-hover bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
           <h3 className="text-xl font-bold">
             Senior Secondary (Class XII)
           </h3>
@@ -56,7 +56,7 @@ export default function Education() {
         </div>
 
         {/* 10th */}
-        <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="glow-red-hover bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
           <h3 className="text-xl font-bold">
             Secondary (Class X)
           </h3>

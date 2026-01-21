@@ -54,14 +54,14 @@ export default function Hero() {
         <div className="flex justify-center gap-4 mb-8">
           <a
             href="#projects"
-            className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
+            className="glow-red-hover px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
           >
             View Projects
           </a>
 
           <a
             href="#contact"
-            className="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition"
+            className="glow-red-hover px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition"
           >
             Contact Me
           </a>

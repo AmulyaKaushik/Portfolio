@@ -5,8 +5,69 @@ body {
   background-color: #0a0a0a;
   color: #e5e7eb;
   font-family: Inter, system-ui, sans-serif;
+cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M 4 2 L 20 12 L 11 14 L 9 22 Z" fill="%23000000" stroke="%23ff0000" stroke-width="2" stroke-linejoin="miter"/></svg>') 4 2, auto;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Red glow shadow on hover */
+@keyframes redGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(220, 38, 38, 0.8), 0 0 50px rgba(220, 38, 38, 0.5);
+  }
+}
+
+/* Pulsing red background animation */
+@keyframes pulsingRedBg {
+  0%, 100% {
+    background-color: rgba(220, 38, 38, 0);
+  }
+  50% {
+    background-color: rgba(220, 38, 38, 0.1);
+  }
+}
+
+/* Particle spark animation */
+@keyframes particleSpark {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0);
+  }
+}
+
+/* Red glow hover effect */
+.glow-red-hover {
+  transition: all 0.3s ease;
+}
+
+.glow-red-hover:hover {
+  animation: redGlowPulse 1.5s ease-in-out infinite;
+  filter: brightness(1.1);
+}
+
+/* Pulsing red background effect - synchronized */
+.pulse-red-bg {
+  animation: pulsingRedBg 2s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+/* Particle spark styles */
+.particle-spark {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  background: #dc2626;
+}
+
+.particle-spark-animate {
+  animation: particleSpark 0.8s ease-out forwards;
 }

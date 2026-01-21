@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ParticleSystem from "./components/ParticleSystem";
 
 import Hero from "./sections/Hero";
 import About from "./sections/About";
@@ -12,6 +13,7 @@ import Contact from "./sections/Contact";
 export default function App() {
   return (
     <>
+      <ParticleSystem />
       <Navbar />
       <Hero />
       <About />

@@ -9,7 +9,7 @@ function StatCard({ label, value, suffix = "" }) {
   return (
     <div
       ref={ref}
-      className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 text-center"
+      className="pulse-red-bg bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 text-center"
     >
       <motion.h3
         initial={{ opacity: 0, scale: 0.8 }}
@@ -56,7 +56,7 @@ export default function About() {
         <div className="h-72 rounded-3xl bg-gradient-to-br from-red-600 to-black" />
 
         {/* Right: Glass Card Content */}
-        <div className="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 text-gray-300 leading-relaxed space-y-4">
+        <div className="pulse-red-bg bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 text-gray-300 leading-relaxed space-y-4">
           <p>
             I am a 3rd year B.Tech Computer Science Engineering student
             with a strong interest in building modern, scalable web

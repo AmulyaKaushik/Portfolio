@@ -7,7 +7,7 @@ function ProjectCard({ title, description, tech, github, live }) {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.3 }}
-      className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 flex flex-col justify-between"
+      className="glow-red-hover bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 flex flex-col justify-between"
     >
       <div>
         <h3 className="text-xl font-bold mb-2">
@@ -36,7 +36,7 @@ function ProjectCard({ title, description, tech, github, live }) {
         <a
           href={github}
           target="_blank"
-          className="hover:text-red-500 transition"
+          className="glow-red-hover hover:text-red-500 transition"
         >
           <Github size={20} />
         </a>
@@ -44,7 +44,7 @@ function ProjectCard({ title, description, tech, github, live }) {
         <a
           href={live}
           target="_blank"
-          className="hover:text-red-500 transition"
+          className="glow-red-hover hover:text-red-500 transition"
         >
           <ExternalLink size={20} />
         </a>

@@ -53,7 +53,7 @@ export default function Contact() {
           </div>
 
           {/* Contact Form */}
-          <form className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 space-y-4">
+          <form className="pulse-red-bg bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 space-y-4">
             <input
               type="text"
               placeholder="Your Name"
@@ -84,7 +84,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
+              className="glow-red-hover w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
             >
               Send Message
             </button>
