@@ -5,7 +5,7 @@ export default function Education() {
       className="py-24 max-w-6xl mx-auto px-6"
     >
       {/* Section Heading */}
-      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
         Education
       </h2>
 

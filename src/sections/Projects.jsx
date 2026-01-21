@@ -36,7 +36,7 @@ function ProjectCard({ title, description, tech, github, live }) {
         <a
           href={github}
           target="_blank"
-          className="hover:text-blue-400 transition"
+          className="hover:text-red-500 transition"
         >
           <Github size={20} />
         </a>
@@ -44,7 +44,7 @@ function ProjectCard({ title, description, tech, github, live }) {
         <a
           href={live}
           target="_blank"
-          className="hover:text-blue-400 transition"
+          className="hover:text-red-500 transition"
         >
           <ExternalLink size={20} />
         </a>
@@ -96,7 +96,7 @@ export default function Projects() {
       className="py-24 max-w-6xl mx-auto px-6"
     >
       {/* Heading */}
-      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
         Projects
       </h2>
 

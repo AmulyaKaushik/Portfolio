@@ -20,7 +20,7 @@ function SkillBar({ name, level }) {
           initial={{ width: 0 }}
           animate={inView ? { width: `${level}%` } : {}}
           transition={{ duration: 1 }}
-          className="h-full bg-gradient-to-r from-blue-400 to-purple-500"
+          className="h-full bg-gradient-to-r from-red-600 to-red-950"
         />
       </div>
     </div>
@@ -31,7 +31,7 @@ function SkillBar({ name, level }) {
 function SkillCategory({ title, skills }) {
   return (
     <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6">
-      <h3 className="text-xl font-bold mb-6 text-blue-400">
+      <h3 className="text-xl font-bold mb-6 text-red-500">
         {title}
       </h3>
 
@@ -58,7 +58,7 @@ export default function Skills() {
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Heading */}
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
           Skills & Technologies
         </h2>
 

@@ -15,10 +15,10 @@ function TimelineItem({ year, title, description }) {
       transition={{ duration: 0.6 }}
       className="relative pl-8 pb-10"
     >
-      <span className="absolute left-0 top-1 w-3 h-3 rounded-full bg-blue-400" />
+      <span className="absolute left-0 top-1 w-3 h-3 rounded-full bg-red-500" />
       <span className="absolute left-[5px] top-4 w-[2px] h-full bg-white/10" />
 
-      <span className="text-sm text-blue-400 font-semibold">
+      <span className="text-sm text-red-500 font-semibold">
         {year}
       </span>
 
@@ -64,7 +64,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 bg-black/40">
       <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
           Learning Journey
         </h2>
 

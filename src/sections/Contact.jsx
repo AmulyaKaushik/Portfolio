@@ -9,7 +9,7 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto px-6">
         
         {/* Heading */}
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
           Contact Me
         </h2>
 
@@ -26,7 +26,7 @@ export default function Contact() {
             <div className="space-y-4 text-sm">
               <a
                 href="mailto:amulyakaushik7@gmail.com"
-                className="flex items-center gap-3 hover:text-blue-400 transition"
+                className="flex items-center gap-3 hover:text-red-500 transition"
               >
                 <Mail size={20} />
                 amulyakaushik7@gmail.com
@@ -35,7 +35,7 @@ export default function Contact() {
               <a
                 href="https://github.com/AmulyaKaushik"
                 target="_blank"
-                className="flex items-center gap-3 hover:text-blue-400 transition"
+                className="flex items-center gap-3 hover:text-red-500 transition"
               >
                 <Github size={20} />
                 github.com/AmulyaKaushik
@@ -44,7 +44,7 @@ export default function Contact() {
               <a
                 href="https://www.linkedin.com/in/amulya-kaushik"
                 target="_blank"
-                className="flex items-center gap-3 hover:text-blue-400 transition"
+                className="flex items-center gap-3 hover:text-red-500 transition"
               >
                 <Linkedin size={20} />
                 linkedin.com/in/amulya-kaushik
@@ -58,33 +58,33 @@ export default function Contact() {
               type="text"
               placeholder="Your Name"
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-blue-400"
+              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-red-500"
             />
 
             <input
               type="email"
               placeholder="Your Email"
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-blue-400"
+              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-red-500"
             />
 
             <input
               type="text"
               placeholder="Subject"
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-blue-400"
+              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-red-500"
             />
 
             <textarea
               placeholder="Your Message"
               rows="5"
               required
-              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-blue-400"
+              className="w-full px-4 py-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-red-500"
             />
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition"
+              className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
             >
               Send Message
             </button>

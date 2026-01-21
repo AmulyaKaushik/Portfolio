@@ -23,7 +23,7 @@ export default function Hero() {
     <section className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
       
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-pink-600/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-black/10 to-black/20" />
 
       {/* Content */}
       <motion.div
@@ -34,7 +34,7 @@ export default function Hero() {
       >
         <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
           Hi, I’m{" "}
-          <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
             Amulya Kaushik
           </span>
         </h1>
@@ -54,7 +54,7 @@ export default function Hero() {
         <div className="flex justify-center gap-4 mb-8">
           <a
             href="#projects"
-            className="px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition"
+            className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 transition"
           >
             View Projects
           </a>
@@ -72,7 +72,7 @@ export default function Hero() {
           <a
             href="https://github.com/AmulyaKaushik"
             target="_blank"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Github size={24} />
           </a>
@@ -80,14 +80,14 @@ export default function Hero() {
           <a
             href="https://www.linkedin.com/in/amulya-kaushik"
             target="_blank"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Linkedin size={24} />
           </a>
 
           <a
             href="mailto:amulyakaushik7@gmail.com"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Mail size={24} />
           </a>

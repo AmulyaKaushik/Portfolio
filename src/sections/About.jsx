@@ -15,7 +15,7 @@ function StatCard({ label, value, suffix = "" }) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.6 }}
-        className="text-3xl font-extrabold text-blue-400"
+        className="text-3xl font-extrabold text-red-500"
       >
         {inView ? value : 0}
         {suffix}
@@ -41,7 +41,7 @@ export default function About() {
       className="py-24 max-w-6xl mx-auto px-6"
     >
       {/* Section Heading */}
-      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+      <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-red-600 to-red-950 bg-clip-text text-transparent">
         About Me
       </h2>
 
@@ -53,7 +53,7 @@ export default function About() {
         className="grid md:grid-cols-2 gap-10 items-center"
       >
         {/* Left: Image / Avatar Placeholder */}
-        <div className="h-72 rounded-3xl bg-gradient-to-br from-blue-500 to-purple-600" />
+        <div className="h-72 rounded-3xl bg-gradient-to-br from-red-600 to-black" />
 
         {/* Right: Glass Card Content */}
         <div className="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 text-gray-300 leading-relaxed space-y-4">

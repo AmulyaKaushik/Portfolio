@@ -15,7 +15,7 @@ export default function Footer() {
           <a
             href="https://github.com/AmulyaKaushik"
             target="_blank"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Github size={18} />
           </a>
@@ -23,14 +23,14 @@ export default function Footer() {
           <a
             href="https://linkedin.com/in/amulya-kaushik"
             target="_blank"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Linkedin size={18} />
           </a>
 
           <a
             href="mailto:amulyakaushik7@gmail.com"
-            className="hover:text-blue-400 transition"
+            className="hover:text-red-500 transition"
           >
             <Mail size={18} />
           </a>
