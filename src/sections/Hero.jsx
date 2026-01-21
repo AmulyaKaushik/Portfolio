@@ -78,7 +78,7 @@ export default function Hero() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/amulya-kaushik/"
+            href="https://www.linkedin.com/in/amulya-kaushik"
             target="_blank"
             className="hover:text-blue-400 transition"
           >
