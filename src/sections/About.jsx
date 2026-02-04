@@ -52,8 +52,17 @@ export default function About() {
         transition={{ duration: 0.8 }}
         className="grid md:grid-cols-2 gap-10 items-center"
       >
-        {/* Left: Image / Avatar Placeholder */}
-        <div className="h-72 rounded-3xl bg-gradient-to-br from-red-600 to-black" />
+        {/* Left: Image / Avatar (2:1 ratio, shows entire image) */}
+        <div className="w-full mx-auto">
+          <div className="aspect-[2/1] w-full rounded-3xl overflow-hidden bg-gray-800">
+            <img
+              src="/Amulya_image.jpeg"
+              alt="Profile"
+              className="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
         {/* Right: Glass Card Content */}
         <div className="pulse-red-bg bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 text-gray-300 leading-relaxed space-y-4">
