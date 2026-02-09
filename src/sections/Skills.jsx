@@ -26,7 +26,8 @@ function SkillIcon({ name, Icon }) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-5 text-center"
+      transition={{ duration: 0.3 }}
+      className="glow-red-hover flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-5 text-center"
     >
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-600/20 to-red-950/20">
         <Icon className="h-6 w-6 text-red-500" />
