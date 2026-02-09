@@ -37,27 +37,39 @@ export default function Experience() {
   const journey = [
     {
       year: "2025",
-      title: "Building Full Stack Projects",
+      title: "Cybersecurity + Networking",
       description:
-        "Developing personal projects using React, Node.js, MongoDB, and focusing on clean UI and scalable code.",
+        "Learned security basics like auth, OWASP risks, safe API design, and core networking concepts.",
+    },
+    {
+      year: "2025",
+      title: "Systems + ML + Automation",
+      description:
+        "Built an LSTM-based sea-level forecasting app, a C++ Trie autocomplete server, and a Linux shell project while sharpening system design and tooling.",
     },
     {
       year: "2024",
-      title: "Learning Web Development",
+      title: "UI Craft + Tooling",
       description:
-        "Explored frontend and backend development with React, Tailwind CSS, REST APIs, and Git.",
+        "Improved UI polish, component reuse, and developer workflows with Git and project structure best practices.",
+    },
+    {
+      year: "2024",
+      title: "Full Stack Engineering",
+      description:
+        "Delivered full stack apps with React, Tailwind CSS, REST APIs, databases, and deployment-focused workflows.",
     },
     {
       year: "2023",
-      title: "Programming & DSA Foundations",
+      title: "Programming + DSA",
       description:
-        "Built strong fundamentals in programming and regularly practiced data structures and algorithms.",
+        "Strengthened programming fundamentals and built problem-solving habits through regular DSA practice.",
     },
     {
-      year: "2022",
-      title: "Started B.Tech in Computer Science",
+      year: "2023",
+      title: "Started B.Tech in CSE",
       description:
-        "Began my journey in computer science and explored various domains of technology.",
+        "Began my computer science journey and explored core programming concepts and problem solving.",
     },
   ];
 

@@ -65,20 +65,20 @@ export default function Projects() {
       live: "https://amulyakaushik-ocean-level-rise-detection-dashboard-euqmss.streamlit.app/",
     },
     {
+      title: "Auto Suggestion Server",
+      description:
+        "C++17 Trie-based autocomplete service over HTTP with JSON responses and a minimal frontend demo.",
+      tech: ["C++17", "Boost.Asio", "Boost.JSON", "CMake", "Docker"],
+      github: "https://github.com/AmulyaKaushik/Web-Based-Auto-Suggestion-Server",
+      //live: "#",
+    },
+    {
       title: "WhatsApp Automation",
       description:
         "Automate sending personalized WhatsApp messages to multiple contacts using WhatsApp Web.",
       tech: ["Python", "Selenium WebDriver", "Web Scraping", "Browser Automation"],
       github: "https://github.com/AmulyaKaushik/WhatsApp_Automation.git",
-      /*live: "#",*/
-    },
-    {
-      title: "Competitive Coding Tracker",
-      description:
-        "Tracks Codeforces and LeetCode stats with visual analytics.",
-      tech: ["React", "Firebase", "Chart.js"],
-      github: "https://github.com/yourusername/cp-tracker",
-      live: "https://cp-tracker.vercel.app",
+      //live: "#",
     },
     {
       title: "College ERP System",
