@@ -81,12 +81,19 @@ export default function Projects() {
       //live: "#",
     },
     {
-      title: "College ERP System",
+      title: "Fly4Career",
       description:
-        "Academic management system for students and faculty.",
-      tech: ["Django", "PostgreSQL", "Bootstrap"],
-      github: "https://github.com/yourusername/college-erp",
-      live: "#",
+        "Production-ready frontend for Fly 4 Career Consultants: a static-first, responsive site with centralized content (home, services, blog placeholder, contact).",
+      tech: [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "PostCSS",
+        "react-router-dom",
+      ],
+      github: "https://github.com/AmulyaKaushik/Fly4Career.git",
+      live: "https://fly4-career.vercel.app/",
     },
   ];
 
