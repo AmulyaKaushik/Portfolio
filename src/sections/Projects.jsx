@@ -64,6 +64,14 @@ export default function Projects() {
       github: "https://github.com/AmulyaKaushik/Ocean-Level-Rise-Detection.git",
       live: "https://amulyakaushik-ocean-level-rise-detection-dashboard-euqmss.streamlit.app/",
     },
+        {
+      title: "RAG Chatbot",
+      description:
+        "Retrieval-Augmented Generation chatbot leveraging LLMs for intelligent conversational responses with context awareness.",
+      tech: ["Python", "LLM", "RAG", "Vector Database"],
+      github: "https://github.com/AmulyaKaushik/Rag-Chatbot.git",
+      //live: "#",
+    },
     {
       title: "Auto Suggestion Server",
       description:
@@ -94,6 +102,14 @@ export default function Projects() {
       ],
       github: "https://github.com/AmulyaKaushik/Fly4Career.git",
       live: "https://fly4-career.vercel.app/",
+    },
+    {
+      title: "Imagine Pharma Solutions",
+      description:
+        "Comprehensive web platform for Imagine Pharma Solutions, delivering pharma industry solutions and information.",
+      tech: ["React", "Tailwind CSS", "Responsive Design"],
+      github: "https://github.com/AmulyaKaushik/Imagine-Pharma-Solutions.git",
+      live: "https://www.imaginepharmasolutions.co.in/",
     },
   ];
 
