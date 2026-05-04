@@ -41,13 +41,15 @@ function ProjectCard({ title, description, tech, github, live }) {
           <Github size={20} />
         </a>
 
-        <a
-          href={live}
-          target="_blank"
-          className="glow-red-hover hover:text-red-500 transition"
-        >
-          <ExternalLink size={20} />
-        </a>
+        {live && (
+          <a
+            href={live}
+            target="_blank"
+            className="glow-red-hover hover:text-red-500 transition"
+          >
+            <ExternalLink size={20} />
+          </a>
+        )}
       </div>
     </motion.div>
   );
@@ -63,6 +65,21 @@ export default function Projects() {
       tech: ["Python", "NOAA API", "LSTM (Deep Learning)", "Streamlit"],
       github: "https://github.com/AmulyaKaushik/Ocean-Level-Rise-Detection.git",
       live: "https://amulyakaushik-ocean-level-rise-detection-dashboard-euqmss.streamlit.app/",
+    },
+    {
+      title: "Cloud-Based Distributed Forensic Evidence Storage System",
+      description:
+        "Secure forensic evidence management platform with role-based access, encrypted storage, audit logging, and tamper-evident chain-of-custody tracking.",
+      tech: [
+        "Flask",
+        "PostgreSQL",
+        "Python",
+        "AES-GCM",
+        "Ed25519",
+        "AWS S3",
+      ],
+      github:
+        "https://github.com/AmulyaKaushik/Cloud-Based-Distributed-Forensic-Evidence-Storage-System.git",
     },
         {
       title: "RAG Chatbot",
@@ -87,21 +104,6 @@ export default function Projects() {
       tech: ["Python", "Selenium WebDriver", "Web Scraping", "Browser Automation"],
       github: "https://github.com/AmulyaKaushik/WhatsApp_Automation.git",
       //live: "#",
-    },
-    {
-      title: "Fly4Career",
-      description:
-        "Production-ready frontend for Fly 4 Career Consultants: a static-first, responsive site with centralized content (home, services, blog placeholder, contact).",
-      tech: [
-        "React",
-        "TypeScript",
-        "Vite",
-        "Tailwind CSS",
-        "PostCSS",
-        "react-router-dom",
-      ],
-      github: "https://github.com/AmulyaKaushik/Fly4Career.git",
-      live: "https://fly4-career.vercel.app/",
     },
     {
       title: "Imagine Pharma Solutions",
