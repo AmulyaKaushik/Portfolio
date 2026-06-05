@@ -15,6 +15,8 @@ export default function Footer() {
           <a
             href="https://github.com/AmulyaKaushik"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
             className="hover:text-red-500 transition"
           >
             <Github size={18} />
@@ -23,6 +25,8 @@ export default function Footer() {
           <a
             href="https://linkedin.com/in/amulya-kaushik"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
             className="hover:text-red-500 transition"
           >
             <Linkedin size={18} />
@@ -30,6 +34,7 @@ export default function Footer() {
 
           <a
             href="mailto:amulyakaushik7@gmail.com"
+            aria-label="Send email to Amulya Kaushik"
             className="hover:text-red-500 transition"
           >
             <Mail size={18} />

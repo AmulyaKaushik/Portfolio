@@ -17,15 +17,17 @@ export default function App() {
     <>
       <ParticleSystem />
       <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <WorkExperience />
-      <Achievements />
-      <Education />
-      <LearningJourney />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <WorkExperience />
+        <Achievements />
+        <Education />
+        <LearningJourney />
+        <Contact />
+      </main>
       <Footer />
     </>
   );

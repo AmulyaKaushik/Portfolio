@@ -35,6 +35,8 @@ export default function Contact() {
               <a
                 href="https://github.com/AmulyaKaushik"
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
                 className="flex items-center gap-3 hover:text-red-500 transition"
               >
                 <Github size={20} />
@@ -44,6 +46,8 @@ export default function Contact() {
               <a
                 href="https://www.linkedin.com/in/amulya-kaushik"
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
                 className="flex items-center gap-3 hover:text-red-500 transition"
               >
                 <Linkedin size={20} />

@@ -36,6 +36,8 @@ function ProjectCard({ title, description, tech, github, live }) {
         <a
           href={github}
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${title} source code on GitHub`}
           className="glow-red-hover hover:text-red-500 transition"
         >
           <Github size={20} />
@@ -45,6 +47,8 @@ function ProjectCard({ title, description, tech, github, live }) {
           <a
             href={live}
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open live demo for ${title}`}
             className="glow-red-hover hover:text-red-500 transition"
           >
             <ExternalLink size={20} />

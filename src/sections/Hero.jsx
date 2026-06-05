@@ -20,7 +20,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
       
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-black/10 to-black/20" />
@@ -80,6 +80,8 @@ export default function Hero() {
           <a
             href="https://github.com/AmulyaKaushik"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
             className="hover:text-red-500 transition"
           >
             <Github size={24} />
@@ -88,6 +90,8 @@ export default function Hero() {
           <a
             href="https://www.linkedin.com/in/amulya-kaushik"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
             className="hover:text-red-500 transition"
           >
             <Linkedin size={24} />
@@ -95,6 +99,7 @@ export default function Hero() {
 
           <a
             href="mailto:amulyakaushik7@gmail.com"
+            aria-label="Send email to Amulya Kaushik"
             className="hover:text-red-500 transition"
           >
             <Mail size={24} />

@@ -57,7 +57,7 @@ export default function About() {
           <div className="aspect-[2/1] w-full rounded-3xl overflow-hidden bg-gray-800">
             <img
               src="/Amulya_image.jpeg"
-              alt="Profile"
+              alt="Portrait of Amulya Kaushik"
               className="w-full h-full object-contain"
               loading="lazy"
             />
