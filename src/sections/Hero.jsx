@@ -65,6 +65,14 @@ export default function Hero() {
           >
             Contact Me
           </a>
+
+          <a
+            href="/Amulya_Kaushik_Resume.pdf"
+            download
+            className="glow-red-hover px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+          >
+            Download Resume
+          </a>
         </div>
 
         {/* Social Links */}

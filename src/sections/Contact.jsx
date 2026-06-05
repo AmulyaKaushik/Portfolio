@@ -1,4 +1,4 @@
-import { Mail, Github, Linkedin } from "lucide-react";
+import { Mail, Github, Linkedin, Download } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -48,6 +48,15 @@ export default function Contact() {
               >
                 <Linkedin size={20} />
                 linkedin.com/in/amulya-kaushik
+              </a>
+
+              <a
+                href="/Amulya_Kaushik_Resume.pdf"
+                download
+                className="flex items-center gap-3 hover:text-red-500 transition"
+              >
+                <Download size={20} />
+                Download Resume
               </a>
             </div>
           </div>
