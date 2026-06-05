@@ -67,25 +67,24 @@ export default function About() {
         {/* Right: Glass Card Content */}
         <div className="pulse-red-bg bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10 text-gray-300 leading-relaxed space-y-4">
           <p>
-            I am a 3rd year B.Tech Computer Science Engineering student
-            with a strong interest in building modern, scalable web
-            applications and solving real-world problems using
-            technology.
+            I am a B.Tech Computer Science student at Jaypee Institute of
+            Information Technology (expected graduation: May 2027) with a
+            strong interest in building modern, scalable web applications
+            and solving real-world problems using technology.
           </p>
 
           <p>
-            My journey into tech started with learning programming
-            fundamentals and competitive coding, and gradually evolved
-            into full stack development. I enjoy working with React,
-            Node.js, and modern UI frameworks to build clean and
-            user-friendly products.
+            My journey into tech started with programming fundamentals
+            and competitive coding, evolving into full-stack and
+            machine-learning projects. I enjoy building user-friendly
+            products with React, Node.js, and modern UI tooling.
           </p>
 
           <p>
-            I am constantly learning new technologies and improving my
-            problem-solving skills. My goal is to grow into a skilled
-            software engineer who creates impactful digital products
-            and contributes meaningfully to the tech industry.
+            I recently worked as a freelance Frontend Developer (Imagine
+            Pharma Solutions), developing and deploying a production
+            website. I keep learning new technologies, with interests in
+            GenAI, full stack development, and system design.
           </p>
         </div>
       </motion.div>
@@ -93,7 +92,7 @@ export default function About() {
       <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
         <StatCard label="Years of Coding" value={3} suffix="+" />
         <StatCard label="Projects Completed" value={12} suffix="+" />
-        <StatCard label="Technologies Used" value={15} suffix="+" />
+        <StatCard label="Technologies Used" value={20} suffix="+" />
         <StatCard label="GitHub Contributions" value={400} suffix="+" />
       </div>
 

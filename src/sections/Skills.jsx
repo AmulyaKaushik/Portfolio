@@ -12,14 +12,22 @@ import {
   SiExpress,
   SiMongodb,
   SiMysql,
+  SiPostgresql,
+  SiRedis,
+  SiSqlite,
   SiTensorflow,
   SiScikitlearn,
   SiGit,
   SiGithub,
   SiLinux,
   SiPostman,
+  SiFlask,
+  SiDocker,
+  SiVercel,
+  SiJupyter,
+  SiStreamlit,
 } from "react-icons/si";
-import { FaBrain, FaProjectDiagram } from "react-icons/fa";
+import { FaBrain, FaProjectDiagram, FaRobot, FaNetworkWired } from "react-icons/fa";
 
 /* ------------------ Skill Icon Component ------------------ */
 function SkillIcon({ name, Icon }) {
@@ -51,15 +59,25 @@ export default function Skills() {
     { name: "Node.js", Icon: SiNodedotjs },
     { name: "Express.js", Icon: SiExpress },
     { name: "MongoDB", Icon: SiMongodb },
-    { name: "SQL", Icon: SiMysql },
+    { name: "MySQL", Icon: SiMysql },
+    { name: "PostgreSQL", Icon: SiPostgresql },
+    { name: "Redis", Icon: SiRedis },
+    { name: "SQLite", Icon: SiSqlite },
     { name: "Machine Learning", Icon: FaBrain },
     { name: "Deep Learning", Icon: FaProjectDiagram },
     { name: "TensorFlow", Icon: SiTensorflow },
     { name: "scikit-learn", Icon: SiScikitlearn },
+    { name: "LangChain / GenAI", Icon: FaRobot },
+    { name: "Flask", Icon: SiFlask },
     { name: "REST APIs", Icon: SiPostman },
+    { name: "WebSockets", Icon: FaNetworkWired },
     { name: "Git", Icon: SiGit },
     { name: "GitHub", Icon: SiGithub },
     { name: "Linux", Icon: SiLinux },
+    { name: "Docker", Icon: SiDocker },
+    { name: "Vercel", Icon: SiVercel },
+    { name: "Streamlit", Icon: SiStreamlit },
+    { name: "Jupyter", Icon: SiJupyter },
   ];
 
   return (

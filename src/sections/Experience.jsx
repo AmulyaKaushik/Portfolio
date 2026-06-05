@@ -18,22 +18,16 @@ function TimelineItem({ year, title, description }) {
       <span className="absolute left-0 top-1 w-3 h-3 rounded-full bg-red-500" />
       <span className="absolute left-[5px] top-4 w-[2px] h-full bg-white/10" />
 
-      <span className="text-sm text-red-500 font-semibold">
-        {year}
-      </span>
+      <span className="text-sm text-red-500 font-semibold">{year}</span>
 
-      <h3 className="text-lg font-bold mt-1">
-        {title}
-      </h3>
+      <h3 className="text-lg font-bold mt-1">{title}</h3>
 
-      <p className="text-sm text-gray-400 mt-1">
-        {description}
-      </p>
+      <p className="text-sm text-gray-400 mt-1">{description}</p>
     </motion.div>
   );
 }
 
-export default function Experience() {
+export default function LearningJourney() {
   const journey = [
     {
       year: "2025",
