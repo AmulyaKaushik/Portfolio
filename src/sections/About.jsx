@@ -93,7 +93,7 @@ export default function About() {
         <StatCard label="Years of Coding" value={3} suffix="+" />
         <StatCard label="Projects Completed" value={12} suffix="+" />
         <StatCard label="Technologies Used" value={20} suffix="+" />
-        <StatCard label="GitHub Contributions" value={400} suffix="+" />
+        <StatCard label="GitHub Contributions" value={200} suffix="+" />
       </div>
 
     </section>
