@@ -63,6 +63,20 @@ function ProjectCard({ title, description, tech, github, live }) {
 export default function Projects() {
   const projects = [
     {
+      title: "ScreenShield",
+      description:
+        "Lightweight computer vision system to detect screen recaptures (photographs of digital displays) using FFT, Local Binary Patterns (LBP), and classical machine learning.",
+      tech: ["Python", "FastAPI", "OpenCV", "Scikit-Learn", "Machine Learning"],
+      github: "https://github.com/AmulyaKaushik/ScreenShield.git",
+    },
+    {
+      title: "Digital Twin",
+      description:
+        "AI system boilerplate that simulates a person's personality and memories from uploaded documents using vector embeddings and LLMs.",
+      tech: ["Next.js", "FastAPI", "PostgreSQL", "ChromaDB", "Docker"],
+      github: "https://github.com/AmulyaKaushik/Digital-Twin.git",
+    },
+    {
       title: "Ocean Level Rise Detection",
       description:
         "Sea-Level Forecasting for Coastal Cities using Time-Series Models.",
@@ -85,7 +99,7 @@ export default function Projects() {
       github:
         "https://github.com/AmulyaKaushik/Cloud-Based-Distributed-Forensic-Evidence-Storage-System.git",
     },
-        {
+    {
       title: "RAG Chatbot",
       description:
         "Retrieval-Augmented Generation chatbot leveraging LLMs for intelligent conversational responses with context awareness.",
