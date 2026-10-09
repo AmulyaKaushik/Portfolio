@@ -1,14 +1,19 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { SCROLL_LOOP_EVENT } from "../hooks/useScrollLoop";
+import { SOCIALS, SOCIAL_SELECT_EVENT } from "../data/socials";
 
 /*
  * Igloo.inc-inspired WebGL particle background.
  *
- * - One Points cloud holds four target shapes per particle (sphere, torus knot,
- *   spiral galaxy, "AK" monogram). Scroll position picks the shape; particles
+ * - One Points cloud holds several target shapes per particle (sphere, torus
+ *   knot, spiral galaxy, social icons). Scroll position picks the shape; particles
  *   travel between shapes with a per-particle delay and turbulence, so the
  *   cloud bursts apart and re-forms instead of sliding linearly.
- * - The cursor pushes particles away and heats them up (red -> white).
+ * - At the end of the page the cloud forms the selected social icon (GitHub,
+ *   LinkedIn, Mail); picking another one bursts it into the next icon.
+ * - The cursor stirs the particles: pushes them out and swirls them round,
+ *   harder the faster it moves. Colours stay in the red palette.
  * - A second, sparse layer of drifting dust wraps around a box ("treadmill")
  *   and moves with scroll parallax, like Igloo's snow layer.
  */
@@ -18,13 +23,14 @@ const SHAPE_STOPS = [
   ["home", 0], // sphere
   ["about", 1], // torus knot
   ["projects", 2], // galaxy
-  ["contact", 3], // "AK" monogram
+  ["contact", 2], // galaxy holds behind the contact form
+  ["finale", 3], // selected social icon, in the empty space after contact
+  ["home-loop", 4], // sphere again on the hero copy, so the scroll loop is seamless
 ];
 
 const COLORS = {
   deep: "#450a0a",
   base: "#dc2626",
-  hot: "#ffe4e6",
 };
 
 const flowGLSL = /* glsl */ `
@@ -48,11 +54,15 @@ const morphVertex = /* glsl */ `
   uniform float uMouseStrength;
   uniform vec3 uColorDeep;
   uniform vec3 uColorBase;
-  uniform vec3 uColorHot;
+  uniform float uIconFrom;
+  uniform float uIconTo;
+  uniform float uIconProgress;
 
   attribute vec3 aPosB;
   attribute vec3 aPosC;
-  attribute vec3 aPosD;
+  attribute vec3 aIcon0;
+  attribute vec3 aIcon1;
+  attribute vec3 aIcon2;
   attribute vec3 aRandom;
 
   varying vec3 vColor;
@@ -61,16 +71,32 @@ const morphVertex = /* glsl */ `
 
   ${flowGLSL}
 
+  // Current social icon (mid-switch, a blend of the old and new one)
+  vec3 gIcon;
+
+  vec3 icon(float i) {
+    if (i < 0.5) return aIcon0;
+    if (i < 1.5) return aIcon1;
+    return aIcon2;
+  }
+
   vec3 shape(float i) {
     if (i < 0.5) return position;
     if (i < 1.5) return aPosB;
     if (i < 2.5) return aPosC;
-    return aPosD;
+    if (i < 3.5) return gIcon;
+    return position; // 4 = sphere again, for the scroll loop
   }
 
   void main() {
+    // Switching social icons: staggered, with a burst that only shows on the icon stop
+    float ik = clamp((uIconProgress - aRandom.y * 0.4) / 0.6, 0.0, 1.0);
+    ik = ik * ik * (3.0 - 2.0 * ik);
+    gIcon = mix(icon(uIconFrom), icon(uIconTo), ik);
+    float iconBurst = sin(ik * 3.14159) * (1.0 - smoothstep(0.0, 1.0, abs(uMorph - 3.0)));
+
     // Staggered transition between the two neighbouring shapes
-    float seg = min(floor(uMorph), 2.0);
+    float seg = min(floor(uMorph), 3.0);
     float f = clamp(uMorph - seg, 0.0, 1.0);
     float k = clamp((f - aRandom.x * 0.4) / 0.6, 0.0, 1.0);
     k = k * k * (3.0 - 2.0 * k);
@@ -78,7 +104,7 @@ const morphVertex = /* glsl */ `
 
     // Turbulence: always a little, a lot mid-transition or while scrolling fast
     float transition = sin(k * 3.14159);
-    pos += flow(pos * 1.3 + aRandom * 4.0, uTime * 0.35) * (0.03 + transition * 0.45 + uEnergy * 0.25);
+    pos += flow(pos * 1.3 + aRandom * 4.0, uTime * 0.35) * (0.03 + transition * 0.45 + iconBurst * 0.6 + uEnergy * 0.25);
 
     // Intro: fly in from a wide scattered cloud
     vec3 scatter = (aRandom - 0.5) * vec3(16.0, 10.0, 10.0);
@@ -89,19 +115,23 @@ const morphVertex = /* glsl */ `
     // Cursor repulsion in world space
     vec4 world = modelMatrix * vec4(pos, 1.0);
     vec2 d = world.xy - uMouse.xy;
-    float push = smoothstep(1.4, 0.0, length(d)) * uMouseStrength;
-    world.xy += normalize(d + 1e-4) * push * 0.55;
-    world.z += push * 0.4;
+    // Cursor: push out and swirl round (uMouseStrength rises with cursor speed)
+    vec2 dir = normalize(d + 1e-4);
+    float push = smoothstep(1.0, 0.0, length(d)) * uMouseStrength;
+    // Uneven per particle plus some noise, so it scatters rather than leaving a clean hole
+    vec3 churn = flow(pos * 3.0 + aRandom * 6.0, uTime * 2.0);
+    world.xy += dir * push * 0.3 * mix(0.3, 1.4, aRandom.z)
+              + vec2(-dir.y, dir.x) * push * 0.3
+              + churn.xy * push * 0.35;
+    world.z += push * 0.6 * (aRandom.x - 0.3);
 
     vec4 mv = viewMatrix * world;
     gl_Position = projectionMatrix * mv;
 
-    float size = uSize * mix(0.4, 1.4, aRandom.y * aRandom.y) * (1.0 + push * 1.2);
+    float size = uSize * mix(0.4, 1.4, aRandom.y * aRandom.y) * (1.0 + min(push, 1.0) * 0.8);
     gl_PointSize = size * uPixelRatio / -mv.z;
 
-    float heat = clamp(push + transition * 0.6 + aRandom.z * 0.2, 0.0, 1.0);
     vColor = mix(uColorDeep, uColorBase, smoothstep(0.0, 0.6, aRandom.z + transition * 0.3));
-    vColor = mix(vColor, uColorHot, heat * heat);
 
     float twinkle = sin(uTime * 1.5 + aRandom.z * 40.0) * 0.5 + 0.5;
     vAlpha = mix(0.35, 1.0, twinkle) * intro;
@@ -226,34 +256,37 @@ function galaxyShape(count) {
   return out;
 }
 
-function textShape(count, text, width) {
+function iconShape(count, { path, viewBox }, size) {
+  const res = 512;
   const canvas = document.createElement("canvas");
-  canvas.width = 1024;
-  canvas.height = 512;
+  canvas.width = res;
+  canvas.height = res;
   const ctx = canvas.getContext("2d");
+  const [w, h] = viewBox;
+  const fit = (res * 0.9) / Math.max(w, h);
+  ctx.translate((res - w * fit) / 2, (res - h * fit) / 2);
+  ctx.scale(fit, fit);
   ctx.fillStyle = "#fff";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.font = "900 380px Inter, system-ui, sans-serif";
-  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+  ctx.fill(new Path2D(path));
 
-  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const { data } = ctx.getImageData(0, 0, res, res);
   const pixels = [];
-  for (let y = 0; y < canvas.height; y += 2) {
-    for (let x = 0; x < canvas.width; x += 2) {
-      if (data[(y * canvas.width + x) * 4 + 3] > 128) pixels.push(x, y);
+  for (let y = 0; y < res; y += 2) {
+    for (let x = 0; x < res; x += 2) {
+      if (data[(y * res + x) * 4 + 3] > 128) pixels.push(x, y);
     }
   }
   if (pixels.length === 0) return sphereShape(count, 1.6);
 
-  const scale = width / canvas.width;
+  const scale = size / res;
   const out = new Float32Array(count * 3);
   const n = pixels.length / 2;
   for (let i = 0; i < count; i++) {
     const j = Math.floor(Math.random() * n) * 2;
-    out[i * 3] = (pixels[j] - canvas.width / 2 + Math.random() * 2) * scale;
-    out[i * 3 + 1] = -(pixels[j + 1] - canvas.height / 2 + Math.random() * 2) * scale;
-    out[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
+    out[i * 3] = (pixels[j] - res / 2 + Math.random() * 2) * scale;
+    out[i * 3 + 1] = -(pixels[j + 1] - res / 2 + Math.random() * 2) * scale;
+    // A little depth; more smears the edges when the scene tilts
+    out[i * 3 + 2] = (Math.random() - 0.5) * 0.12;
   }
   return out;
 }
@@ -297,7 +330,10 @@ export default function ParticleScene() {
     geometry.setAttribute("position", new THREE.BufferAttribute(sphereShape(count, 1.6), 3));
     geometry.setAttribute("aPosB", new THREE.BufferAttribute(torusKnotShape(count), 3));
     geometry.setAttribute("aPosC", new THREE.BufferAttribute(galaxyShape(count), 3));
-    geometry.setAttribute("aPosD", new THREE.BufferAttribute(textShape(count, "AK", isMobile ? 3.4 : 6.4), 3));
+    // The shader has slots for three icons
+    SOCIALS.slice(0, 3).forEach((social, i) => {
+      geometry.setAttribute(`aIcon${i}`, new THREE.BufferAttribute(iconShape(count, social, isMobile ? 2.4 : 2.8), 3));
+    });
     geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 3));
 
     const uniforms = {
@@ -312,7 +348,9 @@ export default function ParticleScene() {
       uOpacity: { value: 0.75 },
       uColorDeep: { value: new THREE.Color(COLORS.deep) },
       uColorBase: { value: new THREE.Color(COLORS.base) },
-      uColorHot: { value: new THREE.Color(COLORS.hot) },
+      uIconFrom: { value: 0 },
+      uIconTo: { value: 0 },
+      uIconProgress: { value: 1 },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -368,6 +406,8 @@ export default function ParticleScene() {
     /* ---- input ---- */
     const pointer = new THREE.Vector2(0, 0);
     const pointerSmooth = new THREE.Vector2(0, 0);
+    const pointerPrev = new THREE.Vector2(0, 0);
+    let stir = 0; // extra strength from cursor speed, decays when it stops
     const raycaster = new THREE.Raycaster();
     const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     const mouseWorld = new THREE.Vector3();
@@ -395,8 +435,10 @@ export default function ParticleScene() {
     window.addEventListener("resize", onResize);
 
     /* ---- scroll -> shape ---- */
+    // A shape is fully formed when its section's top meets the top of the
+    // viewport, which is where the scroll loop stops (socials, hero)
     const targetMorphFromScroll = () => {
-      const center = window.scrollY + window.innerHeight * 0.5;
+      const anchor = window.scrollY;
       const stops = SHAPE_STOPS.map(([id, shape]) => {
         const el = document.getElementById(id);
         return el ? { top: el.getBoundingClientRect().top + window.scrollY, shape } : null;
@@ -406,8 +448,8 @@ export default function ParticleScene() {
       for (let i = 0; i < stops.length - 1; i++) {
         const a = stops[i];
         const b = stops[i + 1];
-        if (center < b.top) {
-          const t = THREE.MathUtils.clamp((center - a.top) / (b.top - a.top), 0, 1);
+        if (anchor < b.top) {
+          const t = THREE.MathUtils.clamp((anchor - a.top) / (b.top - a.top), 0, 1);
           // Hold the current shape, then transform over the last part of the section
           return THREE.MathUtils.lerp(a.shape, b.shape, THREE.MathUtils.smoothstep(t, 0.35, 1));
         }
@@ -419,6 +461,27 @@ export default function ParticleScene() {
     const clock = new THREE.Clock();
     let elapsed = 0;
     let lastScrollY = window.scrollY;
+    let dustScroll = window.scrollY / window.innerHeight;
+
+    // A loop jump moves scrollY by a whole page: shift our bookkeeping by the
+    // same amount, and swap between the two identical sphere states (0 and 4).
+    const onScrollLoop = (e) => {
+      lastScrollY += e.detail.offset;
+      const morph = uniforms.uMorph.value;
+      if (e.detail.offset < 0 && morph > 3.5) uniforms.uMorph.value = morph - 4;
+      if (e.detail.offset > 0 && morph < 0.5) uniforms.uMorph.value = morph + 4;
+    };
+    window.addEventListener(SCROLL_LOOP_EVENT, onScrollLoop);
+
+    const onSocialSelect = (e) => {
+      const next = e.detail.index;
+      if (next === uniforms.uIconTo.value) return;
+      // Mid-switch, start from whichever icon is closer to formed
+      if (uniforms.uIconProgress.value > 0.5) uniforms.uIconFrom.value = uniforms.uIconTo.value;
+      uniforms.uIconTo.value = next;
+      uniforms.uIconProgress.value = 0;
+    };
+    window.addEventListener(SOCIAL_SELECT_EVENT, onSocialSelect);
     let frame;
 
     const tick = () => {
@@ -428,8 +491,14 @@ export default function ParticleScene() {
 
       const scrollY = window.scrollY;
       const vh = window.innerHeight;
-      const scrollVelocity = Math.abs(scrollY - lastScrollY) / vh;
+      const scrollDelta = (scrollY - lastScrollY) / vh;
+      const scrollVelocity = Math.abs(scrollDelta);
+      dustScroll += scrollDelta;
       lastScrollY = scrollY;
+
+      if (uniforms.uIconProgress.value < 1) {
+        uniforms.uIconProgress.value = Math.min(1, uniforms.uIconProgress.value + dt * (reducedMotion ? 10 : 0.9));
+      }
 
       // Intro assemble
       if (uniforms.uIntro.value < 1) uniforms.uIntro.value = Math.min(1, uniforms.uIntro.value + dt * 0.45);
@@ -440,24 +509,30 @@ export default function ParticleScene() {
       uniforms.uEnergy.value += (Math.min(1, scrollVelocity * 25) - uniforms.uEnergy.value) * Math.min(1, dt * 4);
 
       // Bright in the hero and the finale, dimmer behind dense content
-      const heroFade = THREE.MathUtils.clamp(scrollY / vh, 0, 1);
-      let targetOpacity = THREE.MathUtils.lerp(0.75, 0.4, heroFade);
-      if (uniforms.uMorph.value > 2.5) targetOpacity = 0.65;
+      const morph = uniforms.uMorph.value;
+      const isFinale = morph > 2.5 && morph < 3.5;
+      let targetOpacity = 0.4;
+      if (morph < 1) targetOpacity = THREE.MathUtils.lerp(0.75, 0.4, morph);
+      if (isFinale) targetOpacity = 0.9;
+      if (morph >= 3.5) targetOpacity = THREE.MathUtils.lerp(0.9, 0.75, (morph - 3.5) * 2);
       uniforms.uOpacity.value += (targetOpacity - uniforms.uOpacity.value) * Math.min(1, dt * 3);
 
       // Cursor
       pointerSmooth.lerp(pointer, Math.min(1, dt * 5));
       raycaster.setFromCamera(pointerSmooth, camera);
       if (raycaster.ray.intersectPlane(plane, mouseWorld)) uniforms.uMouse.value.copy(mouseWorld);
-      const targetStrength = pointerActive && !reducedMotion ? 1 : 0;
-      uniforms.uMouseStrength.value += (targetStrength - uniforms.uMouseStrength.value) * Math.min(1, dt * 3);
+      stir = Math.min(1.2, stir * Math.pow(0.2, dt) + pointer.distanceTo(pointerPrev) * 3);
+      pointerPrev.copy(pointer);
+      // A resting cursor barely dents the shape; moving it stirs things up
+      const targetStrength = pointerActive && !reducedMotion ? 0.35 + stir : 0;
+      uniforms.uMouseStrength.value += (targetStrength - uniforms.uMouseStrength.value) * Math.min(1, dt * 6);
 
       // Motion
       points.rotation.y += dt * (reducedMotion ? 0 : 0.08) * (1 + uniforms.uEnergy.value * 3);
       tiltGroup.rotation.x += (-pointerSmooth.y * 0.2 - tiltGroup.rotation.x) * Math.min(1, dt * 2);
       tiltGroup.rotation.y += (pointerSmooth.x * 0.3 - tiltGroup.rotation.y) * Math.min(1, dt * 2);
-      // The monogram should face the viewer: ease the spin back to 0 near the last shape
-      if (uniforms.uMorph.value > 2.5) {
+      // The icon should face the viewer: ease the spin back to 0 near it
+      if (isFinale) {
         const r = points.rotation.y % (Math.PI * 2);
         const nearest = r > Math.PI ? Math.PI * 2 : 0;
         points.rotation.y = r + (nearest - r) * Math.min(1, dt * 2.5);
@@ -465,7 +540,7 @@ export default function ParticleScene() {
 
       uniforms.uTime.value = elapsed;
       dustUniforms.uTime.value = elapsed;
-      dustUniforms.uScroll.value = scrollY / vh;
+      dustUniforms.uScroll.value = dustScroll;
 
       renderer.render(scene, camera);
     };
@@ -476,6 +551,8 @@ export default function ParticleScene() {
       window.removeEventListener("pointermove", onPointerMove);
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener(SCROLL_LOOP_EVENT, onScrollLoop);
+      window.removeEventListener(SOCIAL_SELECT_EVENT, onSocialSelect);
       geometry.dispose();
       material.dispose();
       dustGeometry.dispose();

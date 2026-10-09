@@ -2,25 +2,36 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
 
-export default function Hero() {
-  const roles = [
-    "Computer Science Engineer",
-    "Software Developer",
-    "Open Source Enthusiast",
-  ];
+// The role is derived from the clock so the looping copy of the hero (see App)
+// always shows the same role as the original.
+const ROLE_INTERVAL = 2500;
 
-  const [currentRole, setCurrentRole] = useState(0);
+const roles = [
+  "Computer Science Engineer",
+  "Software Developer",
+  "Open Source Enthusiast",
+];
+
+const roleAt = () => Math.floor(Date.now() / ROLE_INTERVAL) % roles.length;
+
+export default function Hero({ id = "home", clone = false }) {
+  const [currentRole, setCurrentRole] = useState(roleAt);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 2500);
+      setCurrentRole(roleAt());
+    }, 250);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
+    <section
+      id={id}
+      aria-hidden={clone || undefined}
+      inert={clone || undefined}
+      className="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden"
+    >
       
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-black/10 to-black/20" />
