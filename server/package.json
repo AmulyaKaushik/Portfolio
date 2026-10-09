@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend API for the portfolio: handles contact form submissions.",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "dev": "node --env-file-if-exists=.env --watch src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "nodemailer": "^10.0.16"
+  }
+}

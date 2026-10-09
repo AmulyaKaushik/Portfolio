@@ -4,11 +4,13 @@ import { useEffect } from "react";
 export const SCROLL_LOOP_EVENT = "scrollloop";
 
 const TRANSITION_MS = 1600;
-// Momentum scrolling keeps sending wheel events after a transition; swallow them
-const LOCK_AFTER_MS = 700;
-// After arriving at the socials or the hero top, ignore pushes for a moment...
+// After arriving at the socials or the hero top (or finishing a transition),
+// wheel events are swallowed until the stream pauses this long. That eats a
+// fast flick's momentum, so only a fresh scroll gesture can move on...
+const MOMENTUM_GAP_MS = 250;
+// ...and never sooner than this
 const ARM_AFTER_MS = 600;
-// ...then it takes this much deliberate scrolling to move on
+// Then it takes this much deliberate scrolling to move on
 const WHEEL_THRESHOLD = 220;
 const TOUCH_THRESHOLD = 70;
 
@@ -31,7 +33,7 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let animating = false;
-    let lockUntil = 0;
+    let swallowMomentum = false;
     let armUntil = 0;
     let pushed = 0;
     let lastWheel = 0;
@@ -48,8 +50,10 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
     };
     const atFinale = (p) => Math.abs(window.scrollY - p.finale) < 4;
     const atHeroTop = () => window.scrollY <= 1;
+    // Called on arriving at a stop: hold here until the user scrolls afresh
     const arm = () => {
       armUntil = performance.now() + ARM_AFTER_MS;
+      swallowMomentum = true;
       pushed = 0;
     };
 
@@ -77,17 +81,23 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
           return;
         }
         animating = false;
-        lockUntil = performance.now() + LOCK_AFTER_MS;
         lastY = window.scrollY;
         onDone?.();
+        arm();
       };
       frame = requestAnimationFrame(step);
+    };
+
+    // Land on the copy, then swap in the real hero
+    const swapToHero = () => {
+      lastY = 0;
+      jump(0);
     };
 
     // Socials -> hero: travel onto the copy, then swap in the real hero
     const toHero = () => {
       const p = stops();
-      if (p) tweenTo(p.loop, () => jump(0));
+      if (p) tweenTo(p.loop, swapToHero);
     };
 
     // Hero -> socials: swap in the copy, then travel back up to the socials
@@ -96,7 +106,7 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
       if (!p) return;
       animating = true;
       jump(p.loop);
-      tweenTo(p.finale, arm);
+      tweenTo(p.finale);
     };
 
     // Wherever scrolling comes to rest near the loop, settle on a stop
@@ -105,10 +115,10 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
       if (animating || !p) return;
       const y = window.scrollY;
       if (y > p.finale + 4 && y < p.loop) {
-        if (y - p.finale < (p.loop - p.finale) / 2) tweenTo(p.finale, arm);
-        else tweenTo(p.loop, () => jump(0));
+        if (y - p.finale < (p.loop - p.finale) / 2) tweenTo(p.finale);
+        else tweenTo(p.loop, swapToHero);
       } else if (y < p.finale - 4 && y > p.finale - window.innerHeight * 0.35) {
-        tweenTo(p.finale, arm);
+        tweenTo(p.finale);
       }
     };
 
@@ -118,7 +128,15 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
       if (!p) return;
       const y = window.scrollY;
 
-      // Safety net (e.g. dragging the scrollbar to the very end)
+      // Barrier: however fast the page moves (smooth-scrolled wheel, End key,
+      // scrollbar), it can't pass the socials going down without a transition
+      if (lastY <= p.finale + 1 && y > p.finale + 1) {
+        window.scrollTo({ top: p.finale, behavior: "instant" });
+        lastY = p.finale;
+        arm();
+        return;
+      }
+      // Safety net: anything that still reaches the copy loops round
       if (y >= p.loop) {
         jump(y - p.loop);
         lastY = window.scrollY;
@@ -134,9 +152,18 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
 
     const onWheel = (e) => {
       const now = performance.now();
-      if (animating || now < lockUntil) {
+      const gap = now - lastWheel;
+      lastWheel = now;
+      if (animating) {
         e.preventDefault();
         return;
+      }
+      if (swallowMomentum) {
+        if (gap < MOMENTUM_GAP_MS) {
+          e.preventDefault();
+          return;
+        }
+        swallowMomentum = false;
       }
       const p = stops();
       if (!p) return;
@@ -156,8 +183,7 @@ export default function useScrollLoop(loopRef, finaleId = "finale") {
       if ((down && atFinale(p)) || (!down && atHeroTop())) {
         e.preventDefault();
         if (now < armUntil) return;
-        if (now - lastWheel > 400) pushed = 0;
-        lastWheel = now;
+        if (gap > 400) pushed = 0;
         pushed += Math.abs(px);
         if (pushed > WHEEL_THRESHOLD) {
           pushed = 0;
